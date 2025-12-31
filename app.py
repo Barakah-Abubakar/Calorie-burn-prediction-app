@@ -21,7 +21,8 @@ df = load_data()
 
 # Encode Gender
 label_encoder = LabelEncoder()
-df["Gender"] = label_encoder.fit_transform(df["Gender"])
+df["Gender"] = df["Gender"].map({"male": 0, "female": 1})
+#df["Gender"] = label_encoder.fit_transform(df["Gender"])
 
 X = df.drop(['Calories', 'User_ID'], axis=1)
 y = df["Calories"]
@@ -56,7 +57,8 @@ heart_rate = st.slider("Heart Rate", 60, 200, 120)
 body_temp = st.slider("Body Temperature (°C)", 35.0, 42.0, 37.0)
 
 
-gender_encoded = label_encoder.transform([gender.lower()])[0]
+gender_encoded = 0 if gender == "Male" else 1
+
 
 features = np.array([[gender_encoded, age, height, weight,
                       duration, heart_rate, body_temp]])
@@ -65,3 +67,4 @@ features = np.array([[gender_encoded, age, height, weight,
 if st.button("🔥 Predict Calories Burned"):
     calories = model.predict(features)[0]
     st.success(f"🔥 Estimated Calories Burned: **{calories:.2f} kcal**")
+
