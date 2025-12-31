@@ -14,7 +14,7 @@ st.write("Estimate calories burned during exercise using a machine learning mode
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("/calories.csv") 
+    df = pd.read_csv("calories.csv") 
     return df
 
 df = load_data()
@@ -67,4 +67,5 @@ features = np.array([[gender_encoded, age, height, weight,
 if st.button("🔥 Predict Calories Burned"):
     calories = model.predict(features)[0]
     st.success(f"🔥 Estimated Calories Burned: **{calories:.2f} kcal**")
+
 
